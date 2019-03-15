@@ -46,3 +46,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .site-footer {
+    font-family: 'Titillium Web', sans-serif;
+  }
+</style>
