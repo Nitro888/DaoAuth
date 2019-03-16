@@ -43,7 +43,7 @@
     <v-layout row wrap>
       <v-flex md4>
         <div class="headline">Issuer Account</div>
-        <div class="subheading">{{member.issuers}}/{{member.accounts}}</div>
+        <div class="subheading mb-3">{{member.issuers}}/{{member.accounts}}</div>
       </v-flex>
       <v-flex md8>
         <v-expansion-panel>
@@ -143,11 +143,50 @@
       </v-flex>
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
+    <v-layout row wrap>
+      <v-flex lg4>
+        <div class="headline mb-3">Token Factory</div>
+      </v-flex>
+      <v-flex lg8>
+        <v-expansion-panel>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div class="title">ERC20</div>
+            </template>
+            <v-container>
+              <ERC20 ref="erc20"/>
+              <div class="text-xs-right">
+                <v-btn flat @click="createErc20">Create</v-btn>
+              </div>
+            </v-container>
+          </v-expansion-panel-content>
+          <v-expansion-panel-content>
+            <template v-slot:header>
+              <div class="title">ERC721</div>
+            </template>
+            <v-container>
+              <ERC721 ref="erc721"/>
+              <div class="text-xs-right">
+                <v-btn flat @click="createErc721">Create</v-btn>
+              </div>
+            </v-container>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-flex>
+    </v-layout>
+    <v-divider class="mb-3 mt-3"/>
   </v-container>
 </template>
 
 <script>
+  import ERC20 from '@/components/ERC20Factory.vue'
+  import ERC721 from '@/components/ERC721Factory.vue'
+
   export default {
+    components: {
+      ERC20,
+      ERC721
+    },
     data () {
       return {
         valid: null,
@@ -194,19 +233,24 @@
       }
     },
     methods: {
-      sendTransaction: function (data) {
-        web3.eth.sendTransaction({
-          from: web3.eth.accounts[0],
-          to: window.wallet.daoAuth.address,
-          data: data
-        }, (err, result) => {
-          console.log(err,result)
-        })
+      sendTransaction: function (to, data) {
+        if (web3.eth.accounts.length>0) {
+          web3.eth.sendTransaction({
+            from: web3.eth.accounts[0],
+            to,
+            data
+          }, (err, result) => {
+            console.log(err,result)
+          })
+        } else {
+          // error
+        }
       },
       createIssuer: function () {
         if (this.$refs.formCreate.validate() && this.enable) {
           let uid = window.wallet.web3.utils.keccak256(this.create.uid)
           this.sendTransaction(
+            window.wallet.daoAuth.address,
             window.wallet.daoAuth.methods.create([this.create.master, this.create.payment, this.create.verify], uid).encodeABI()
           )
         }
@@ -214,6 +258,7 @@
       addProxy: function () {
         if (this.$refs.formAdd.validate() && this.enable) {
           this.sendTransaction(
+            window.wallet.daoAuth.address,
             window.wallet.daoAuth.methods.proxyAdd(this.add.account, this.add.proxyKey).encodeABI()
           )
         }
@@ -221,9 +266,22 @@
       removeProxy: function () {
         if (this.$refs.formRemove.validate() && this.enable) {
           this.sendTransaction(
+            window.wallet.daoAuth.address,
             window.wallet.daoAuth.methods.proxyRemove(this.remove.account, this.remove.proxyKey).encodeABI()
           )
         }
+      },
+      deploy: function (result) {
+        this.sendTransaction(
+          null,
+          (new window.wallet.web3.eth.Contract(result.abi)).deploy(result.option).encodeABI()
+        )
+      },
+      createErc20: function () {
+        this.deploy(this.$refs.erc20.compile())
+      },
+      createErc721: function () {
+        this.deploy(this.$refs.erc721.compile())
       }
     }
   }
@@ -233,7 +291,6 @@
   .address {
     font-family: 'Roboto Mono', monospace;
   }
-
   .address-small {
     font-family: 'Roboto Mono', monospace;
     font-size: 0.9em;
