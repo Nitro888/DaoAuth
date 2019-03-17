@@ -11,6 +11,26 @@
       >
         <v-icon>fab fa-github</v-icon>
       </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            flat
+            icon
+            v-on="on"
+          >
+            {{select}}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-tile
+            v-for="(item, key) in items"
+            :key="key"
+            @click="change(key)"
+          >
+            <v-list-tile-title>{{ key }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
     <v-footer
       app
@@ -25,13 +45,15 @@
     </v-footer>
     
     <v-content>
-      <Home/>
+      <Home v-bind:contents="contents"/>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Home from './views/Home'
+import KO from '@/document/ko.js'
+import EN from '@/document/en.js'
 
 export default {
   name: 'App',
@@ -41,7 +63,15 @@ export default {
   data () {
     return {
       title: 'DaoAuth',
+      items: {KO, EN},
+      contents: KO,
+      select: 'KO',
       footer: '&copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>',
+    }
+  },
+  methods: {
+    change: function (select) {
+      this.contents = this.items[select]
     }
   }
 }

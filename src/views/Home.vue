@@ -1,44 +1,9 @@
 <template>
   <v-container>
-      <h1 class="white--text font-weight-medium mb-2 display-1 text-xs-left">DaoAuth</h1>
-      <div class="subheading mb-5 text-xs-left nanum-gothic">
-        <blockquote class="blockquote subheading">
-          DaoAuth는 블록체인을 이용한 탈중앙 인증 수단입니다.
-        </blockquote>
-      </div>
-      <h1 class="white--text font-weight-medium mb-2 display-1 text-xs-left">Account</h1>
-      <div class="subheading mb-5 text-xs-left nanum-gothic">
-        <blockquote class="blockquote subheading">
-          프라이빗키와 공개주소를 이용한 기존 지갑은<br/>
-          <blockquote class="blockquote subheading">
-            1. 프라이빗키 유출에 따른 대응이 불가능하며,<br/>
-            2. 타인에게 양도할 경우, 상호 신뢰의 문제가 있으며,<br/>
-            3. 사용자가 키를 변경하였을 경우 기존 키와 공개주소를 이용해 쌓은 자산들을 가져오기 불가능하다는 단점등이 있습니다.<br/>
-          </blockquote>
-          그러나 DaoAuth에 의해 만들어진 어카운트는<br/>
-          <blockquote class="blockquote subheading">
-            1. 사용자 암호를 바꾸듯이 사용자가 언제든지 키를 바꿀 수 있으며,<br/>
-            2. 따라서 양도 문제에 있어서도 신뢰의 문제가 사라지게 됩니다.<br/>
-            3. 그리고 키를 변경하더라도 어카운트의 주소는 변경이 되지 않기 때문에, 많은 자산들을 이전에 대해 고민할 필요가 없습니다.<br/>
-          </blockquote>
-        </blockquote>
-      </div>
-      <h1 class="white--text font-weight-medium mb-2 display-1 text-xs-left">Issuer</h1>
-      <div class="subheading mb-5 text-xs-left nanum-gothic">
-        <blockquote class="blockquote subheading">
-          자신의 어카운트를 직접 DaoAuth에서 생성한 사용자를 인증자라고 부릅니다.<br/>
-          인증자들은 사용자들의 요청을 받아 어카운트를 생성해주게 되며,<br/>
-          이때 인증자는 경우에 따라 사용자들에게 생성해주는 댓가로 e-mail, 전화번호, 그외 기타 KYC&AML에 필요한 정보를 요청할 수 있습니다.<br/>
-          따라서 높은 수준 정보를 요구하는 인증자들이 생성한 어카운트일 수록 계좌거래에 있어서 상대방에게 높은 신뢰를 얻을 수 있습니다.
-        </blockquote>
-      </div>
-      <h1 class="white--text font-weight-medium mb-2 display-1 text-xs-left">User</h1>
-      <div class="subheading mb-5 text-xs-left nanum-gothic">
-        <blockquote class="blockquote subheading">
-          인증자를 통해 어카운트를 생성한 이용자들을 사용자들이라고 부릅니다.<br/>
-          그리고 이 어카운트를 이용해 DaoAuth를 지원하는 각종 서비스에 바로 가입하여 이용할 수 있게 됩니다.
-        </blockquote>
-      </div>
+    <div v-for="(item, index) in contents" v-bind:key="index">
+      <h1 class="white--text font-weight-medium mb-2 display-1 text-xs-center" v-html="item.title"/>
+      <v-container class="subheading mb-5 text-xs-center nanum-gothic" v-html="item.content"/>
+    </div>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
       <v-flex md4>
@@ -187,6 +152,7 @@
       ERC20,
       ERC721
     },
+    props: ['contents'],
     data () {
       return {
         valid: null,
