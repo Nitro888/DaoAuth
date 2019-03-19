@@ -192,9 +192,9 @@ export default {
     }
   },
   mounted: function () {
-    if (web3) {
+    if (web3) { // eslint-disable-line
       this.enable = true
-      web3.eth.call({
+      web3.eth.call({ // eslint-disable-line
         to: window.wallet.daoAuth.address,
         data: window.wallet.daoAuth.methods.accounts().encodeABI()
       }, (err, result) => {
@@ -208,9 +208,9 @@ export default {
   },
   methods: {
     sendTransaction: function (to, data, callback = null) {
-      if (web3.eth.accounts.length > 0) {
-        web3.eth.sendTransaction({
-          from: web3.eth.accounts[0],
+      if (web3.eth.accounts.length > 0) { // eslint-disable-line
+        web3.eth.sendTransaction({  // eslint-disable-line
+          from: web3.eth.accounts[0],  // eslint-disable-line
           to,
           data
         }, (err, result) => {
@@ -261,7 +261,7 @@ export default {
       this.deploy(this.$refs.erc721.compile())
     },
     call: function (data) {
-      web3.eth.call(data.callData, data.callback)
+      web3.eth.call(data.callData, data.callback) // eslint-disable-line
     },
     send: function (data) {
       this.sendTransaction(data.callData.to, data.callData.data, data.callback)

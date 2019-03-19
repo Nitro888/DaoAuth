@@ -166,13 +166,11 @@
       </v-flex>
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
-    <v-dialog v-model="dialog.show" persistent max-width="480">
+    <v-dialog v-model="dialog.show" persistent max-width="640">
       <component
       v-bind:is="dialog.body"
       v-bind:address="this.address"
-      v-bind:fullName="dialog.fullName"
-      v-bind:returns="dialog.returns"
-      v-bind:obj="dialog.obj"
+      v-bind:dialog="dialog"
       @hide="dialog.show=false;dialog.body=null;dialog.obj=null"
       @call="(e)=>$emit('call',e)"
       @send="(e)=>$emit('send',e)"
@@ -266,10 +264,10 @@ export default {
       return '(' + result + ')'
     },
     getName: function (obj) {
-      return obj.type + ' ' + obj.name + this.arguments(obj.inputs)
+      return obj.name + this.arguments(obj.inputs)
     },
     create: function (obj) {
-      let title = this.getName(obj)
+      let title = obj.type + ' ' + this.getName(obj)
       switch (obj.type) {
         case 'function':
           let returns = this.arguments(obj.outputs)
@@ -289,13 +287,15 @@ export default {
       }
     },
     runNCF: function (obj) {
-      this.dialog.fullName = this.getName(obj)
+      this.dialog.name = this.getName(obj)
+      this.dialog.fullName = obj.type + ' ' + this.dialog.name
       this.dialog.obj = obj
       this.dialog.body = ABIRun
       this.dialog.show = !this.dialog.show
     },
     runCF: function (obj) {
-      this.dialog.fullName = this.getName(obj)
+      this.dialog.name = this.getName(obj)
+      this.dialog.fullName = obj.type + ' ' + this.dialog.name
       this.dialog.obj = obj
       this.dialog.body = ABIRun
       this.dialog.returns = 'returns ' + this.arguments(obj.outputs)
@@ -303,7 +303,7 @@ export default {
     },
     runEvent: function (obj) {
       /*
-      this.dialog.fullName = this.getName(obj)
+      this.dialog.fullName = obj.type + ' ' + this.getName(obj)
       this.dialog.obj = obj
       this.dialog.body = ABIRun
       this.dialog.show = !this.dialog.show
