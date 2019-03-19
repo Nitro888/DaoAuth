@@ -39,11 +39,11 @@
       <v-card
         class="flex site-footer"
         flat
-      >    
+      >
         <v-card-actions class="justify-center" v-html="footer"/>
       </v-card>
     </v-footer>
-    
+
     <v-content>
       <Home v-bind:contents="contents"/>
     </v-content>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Home from './views/Home'
+import Home from '@/views/Home'
 import KO from '@/document/ko.js'
 import EN from '@/document/en.js'
 
@@ -63,10 +63,10 @@ export default {
   data () {
     return {
       title: 'DaoAuth',
-      items: {KO, EN},
+      items: { KO, EN },
       contents: KO,
       select: 'KO',
-      footer: '&copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>',
+      footer: '&copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>'
     }
   },
   methods: {
