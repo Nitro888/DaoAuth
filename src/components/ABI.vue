@@ -9,7 +9,7 @@
           <v-text-field
             v-model="address"
             label="Contract Address"
-            class="address"
+            class="mono"
           ></v-text-field>
           <v-layout justify-end>
             <v-btn flat @click.stop="load()">Load</v-btn>
@@ -64,6 +64,7 @@
               <v-text-field
                 readonly
                 v-model="contract.swarm"
+                class="mono"
                 label="Swarm Source"
               ></v-text-field>
               <v-textarea
@@ -71,6 +72,7 @@
                 outline
                 rows='25'
                 label="Contract Source Code"
+                class="mono-small"
                 :value="contract.code"
               ></v-textarea>
             </v-container>
@@ -95,6 +97,7 @@
                 outline
                 rows='10'
                 label="Contract ABI"
+                class="mono-small"
                 :value="contract.abi"
               ></v-textarea>
             </v-container>
@@ -111,8 +114,8 @@
                   @click="runNCF(item.obj)"
                 >
                   <v-list-tile-content>
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title>
+                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
+                    <v-list-tile-sub-title class="mono">
                       <v-chip v-if="item.payable" label disabled color="red" text-color="white">Payable</v-chip>
                       {{ item.returns }}
                     </v-list-tile-sub-title>
@@ -312,3 +315,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .mono {
+    font-family: 'Roboto Mono', monospace;
+  }
+  .mono-small {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9em;
+  }
+</style>

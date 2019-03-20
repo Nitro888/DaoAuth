@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="title grey darken-2" primary-title>{{ title }}</v-card-title>
+    <v-card-title primary-title><span class="font-weight-medium mono">{{ title }}</span></v-card-title>
     <!--
     <v-card-text>{{ dialog.fullName }}</v-card-text>
     -->
@@ -23,11 +23,10 @@
         ></v-textarea>
       </v-form>
     </v-container>
-    <v-divider/>
     <v-layout v-if="dialog.obj.type=='function'">
       <v-spacer></v-spacer>
       <v-btn flat @click.stop="$emit('hide')">Close</v-btn>
-      <v-btn flat @click.stop="run">Run</v-btn>
+      <v-btn flat @click.stop="run">{{ btn }}</v-btn>
     </v-layout>
   </v-card>
 </template>
@@ -40,7 +39,8 @@ export default {
     title: '',
     agrs: [],
     notEmpty: [v => !!v || 'Required.'],
-    result: ''
+    result: '',
+    btn: 'RUN'
   }),
   mounted: function () {
     // console.log(this.dialog.obj)
@@ -50,6 +50,7 @@ export default {
     for (let i = 0; i < this.dialog.obj.inputs.length; i++) {
       this.agrs.push({ model: '', label: this.dialog.obj.inputs[i].type + ' ' + this.dialog.obj.inputs[i].name })
     }
+    this.btn = this.dialog.obj.constant ? 'Call' : 'Send'
   },
   methods: {
     run: function () {
@@ -84,3 +85,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .mono {
+    font-family: 'Roboto Mono', monospace;
+  }
+</style>
