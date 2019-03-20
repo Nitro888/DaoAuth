@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title primary-title><span class="font-weight-medium mono">{{ title }}</span></v-card-title>
+    <v-card-title primary-title><span class="mono font-weight-medium">{{ title }}</span></v-card-title>
     <!--
     <v-card-text>{{ dialog.fullName }}</v-card-text>
     -->
@@ -10,6 +10,7 @@
           v-for="(item, index) in agrs"
           v-bind:key="index"
           v-model="item.model"
+          class="mono"
           :label="item.label"
           :rules="notEmpty"
           required
@@ -18,6 +19,7 @@
           readonly
           outline
           v-if="dialog.obj.type=='function'&&dialog.obj.constant"
+          class="mono"
           :label="dialog.returns"
           :value="result"
         ></v-textarea>

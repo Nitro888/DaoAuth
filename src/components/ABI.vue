@@ -115,9 +115,9 @@
                 >
                   <v-list-tile-content>
                     <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title class="mono">
+                    <v-list-tile-sub-title>
                       <v-chip v-if="item.payable" label disabled color="red" text-color="white">Payable</v-chip>
-                      {{ item.returns }}
+                      <span class="mono">{{ item.returns }}</span>
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
@@ -136,10 +136,10 @@
                   @click="runCF(item.obj)"
                 >
                   <v-list-tile-content>
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
                     <v-list-tile-sub-title>
                       <v-chip v-if="item.payable" label disabled color="red" text-color="white">Payable</v-chip>
-                      {{ item.returns }}
+                      <span class="mono">{{ item.returns }}</span>
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
@@ -152,14 +152,22 @@
             </template>
             <v-container>
               <v-list two-line subheader>
+                <!--
                 <v-list-tile
                   v-for="(item, index) in e"
                   v-bind:key="index"
                   @click="runEvent(item.obj)"
                 >
+                -->
+                <v-list-tile
+                  v-for="(item, index) in e"
+                  v-bind:key="index"
+                  :href="getUrl(item.obj)"
+                  target="_blank"
+                >
                   <v-list-tile-content>
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title>{{ item.returns }}</v-list-tile-sub-title>
+                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
+                    <v-list-tile-sub-title class="mono">{{ item.returns }}</v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
               </v-list>
@@ -172,7 +180,7 @@
     <v-dialog v-model="dialog.show" persistent max-width="640">
       <component
       v-bind:is="dialog.body"
-      v-bind:address="this.address"
+      v-bind:address="address"
       v-bind:dialog="dialog"
       @hide="dialog.show=false;dialog.body=null;dialog.obj=null"
       @call="(e)=>$emit('call',e)"
@@ -305,12 +313,14 @@ export default {
       this.dialog.show = !this.dialog.show
     },
     runEvent: function (obj) {
-      /*
-      this.dialog.fullName = obj.type + ' ' + this.getName(obj)
-      this.dialog.obj = obj
-      this.dialog.body = ABIRun
-      this.dialog.show = !this.dialog.show
-      */
+      let topics = 'topic0=' + window.wallet.abiQR.encodeEventSignature(obj)
+      window.wallet.logs.getLogs(this.address, topics)
+        .catch(console.log)
+        .then(console.log)
+    },
+    getUrl: function (obj) {
+      let topics = 'topic0=' + window.wallet.abiQR.encodeEventSignature(obj)
+      return window.wallet.logs.getUrl(this.address, topics)
     }
   }
 }

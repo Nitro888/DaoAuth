@@ -37,6 +37,9 @@ window.wallet = {
         code = window.wallet.web3.eth.abi.encodeFunctionCall(abi.json, parameters)
       }
       return { to: abi.to, code }
+    },
+    encodeEventSignature: function (jsonInterface) {
+      return web3.eth.abi.encodeEventSignature(jsonInterface)
     }
   },
   // window.wallet.logs
@@ -52,6 +55,20 @@ window.wallet = {
         let url = api + '/api?module=contract&action=getsourcecode&address=' + address
         window.wallet.utils.loadJson(url).then(data => { resolve(data.result) }).catch(reject)
       })
+    },
+    getLogs: function (address, topics) {
+      return new Promise(function (resolve, reject) {
+        window.wallet.utils.loadJson(window.wallet.logs.getUrl(address, topics))
+          .catch(reject)
+          .then(data => {
+            resolve(data.result)
+          })
+      })
+    },
+    getUrl: function (address, topics) {
+      let url = api + '/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=' + address
+      if (topics !== '') { url += '&' + topics }
+      return url
     }
   },
   utils: {
