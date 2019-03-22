@@ -24,36 +24,41 @@
                   v-model="create.master"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="Payment"
                   v-model="create.payment"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="Verify"
                   v-model="create.verify"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="UID"
                   v-model="create.uid"
                   class="address-small"
                   :rules="[rules.min]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="Account"
                   v-model="create.account"
                   class="address-small"
                   :loading="loading"
+                  :disabled="!enable"
                   readonly
                 ></v-text-field>
                 <v-spacer/><v-spacer/><v-spacer/>
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="createIssuer">Create</v-btn>
+                <v-btn flat @click="createIssuer" :disabled="!enable">Create</v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
@@ -68,16 +73,18 @@
                   v-model="add.account"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="UID"
                   v-model="add.proxyKey"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="addProxy">Add</v-btn>
+                <v-btn flat @click="addProxy" :disabled="!enable">Add</v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
@@ -92,16 +99,18 @@
                   v-model="remove.account"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
                 <v-text-field
                   label="UID"
                   v-model="remove.proxyKey"
                   class="address-small"
                   :rules="[rules.isAddress]"
+                  :disabled="!enable"
                 ></v-text-field>
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="removeProxy">Remove</v-btn>
+                <v-btn flat @click="removeProxy" :disabled="!enable">Remove</v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
@@ -192,7 +201,7 @@ export default {
     }
   },
   mounted: function () {
-    if (web3) { // eslint-disable-line
+    if (web3 && web3.currentProvider.networkVersion.toString() === '3') { // eslint-disable-line
       this.enable = true
       web3.eth.call({ // eslint-disable-line
         to: window.wallet.daoAuth.address,
