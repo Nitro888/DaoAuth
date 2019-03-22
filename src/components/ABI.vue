@@ -231,7 +231,7 @@ export default {
         this.contract.code = ''
         this.contract.swarm = ''
         this.contract.abi = ''
-        window.wallet.logs.loadSource(this.address)
+        window.wallet.logs.loadSource(web3.currentProvider.networkVersion, this.address) // eslint-disable-line
           .catch(console.log)
           .then((r) => {
             if (r.length > 0) {
@@ -245,7 +245,7 @@ export default {
               this.contract.swarm = this.source.SwarmSource
               this.createInterface()
             } else {
-              window.wallet.logs.loadABI(this.address)
+              window.wallet.logs.loadABI(web3.currentProvider.networkVersion, this.address) // eslint-disable-line
                 .catch(console.log)
                 .then((r) => {
                   this.source.ABI = r
@@ -314,13 +314,13 @@ export default {
     },
     runEvent: function (obj) {
       let topics = 'topic0=' + window.wallet.abiQR.encodeEventSignature(obj)
-      window.wallet.logs.getLogs(this.address, topics)
+      window.wallet.logs.getLogs(web3.currentProvider.networkVersion, this.address, topics) // eslint-disable-line
         .catch(console.log)
         .then(console.log)
     },
     getUrl: function (obj) {
       let topics = 'topic0=' + window.wallet.abiQR.encodeEventSignature(obj)
-      return window.wallet.logs.getUrl(this.address, topics)
+      return window.wallet.logs.getUrl(web3.currentProvider.networkVersion, this.address, topics) // eslint-disable-line
     }
   }
 }

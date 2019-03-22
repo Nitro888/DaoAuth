@@ -3,7 +3,12 @@ const base64js = require('base64-js')
 const Web3 = require('web3')
 const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546')
 const jsonInterface = require('./daoAuth.js')
-const api = 'https://api-ropsten.etherscan.io'
+const api = {
+  '1': 'https://api.etherscan.io', // main
+  '3': 'https://api-ropsten.etherscan.io', // ropsten
+  '4': 'https://api-rinkeby.etherscan.io', // Rinkeby
+  '42': 'https://api-kovan.etherscan.io' // kovan
+}
 
 window.wallet = {
   web3: web3,
@@ -44,15 +49,15 @@ window.wallet = {
   },
   // window.wallet.logs
   logs: {
-    loadABI: function (address) {
+    loadABI: function (network, address) {
       return new Promise(function (resolve, reject) {
-        let url = api + '/api?module=contract&action=getabi&address=' + address
+        let url = api[network] + '/api?module=contract&action=getabi&address=' + address
         window.wallet.utils.loadJson(url).then(data => { resolve(data.result) }).catch(reject)
       })
     },
-    loadSource: function (address) {
+    loadSource: function (network, address) {
       return new Promise(function (resolve, reject) {
-        let url = api + '/api?module=contract&action=getsourcecode&address=' + address
+        let url = api[network] + '/api?module=contract&action=getsourcecode&address=' + address
         window.wallet.utils.loadJson(url).then(data => { resolve(data.result) }).catch(reject)
       })
     },
@@ -65,8 +70,8 @@ window.wallet = {
           })
       })
     },
-    getUrl: function (address, topics) {
-      let url = api + '/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=' + address
+    getUrl: function (network, address, topics) {
+      let url = api[network] + '/api?module=logs&action=getLogs&fromBlock=0&toBlock=latest&address=' + address
       if (topics !== '') { url += '&' + topics }
       return url
     }

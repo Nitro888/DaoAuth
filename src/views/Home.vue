@@ -208,9 +208,9 @@ export default {
   },
   methods: {
     sendTransaction: function (to, data, callback = null) {
-      if (web3.eth.accounts.length > 0) { // eslint-disable-line
+      if (web3.currentProvider.selectedAddress) { // eslint-disable-line
         web3.eth.sendTransaction({  // eslint-disable-line
-          from: web3.eth.accounts[0],  // eslint-disable-line
+          from: web3.currentProvider.selectedAddress,  // eslint-disable-line
           to,
           data
         }, (err, result) => {
