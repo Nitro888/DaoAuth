@@ -72,7 +72,7 @@ export default {
             }
           })
         } catch (error) {
-          console.log(JSON.stringify(error))
+          this.result = JSON.stringify(error)
         }
       }
     },
