@@ -1,4 +1,4 @@
-# daoauth
+# DaoAuth
 
 ## Project setup
 ```
