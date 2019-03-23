@@ -5,11 +5,12 @@
         <div class="headline font-weight-light">Contract</div>
       </v-flex>
       <v-flex xs8>
-        <v-form>
+        <v-form ref="formContract" v-model="valid" lazy-validation>
           <v-text-field
             v-model="address"
             label="Contract Address"
             class="mono"
+            :rules="[rules.isAddress]"
           ></v-text-field>
           <v-layout justify-end>
             <v-btn flat @click.stop="load()">Load</v-btn>
@@ -217,14 +218,14 @@ export default {
       fullName: '',
       body: null,
       obj: null
+    },
+    rules: {
+      isAddress: value => window.wallet.isAddress(value) || 'Is not address.'
     }
   }),
-  mounted: function () {
-    this.load()
-  },
   methods: {
     load: function () {
-      if (this.address) {
+      if (this.$refs.formContract.validate()) {
         this.contract.name = ''
         this.contract.compiler = ''
         this.contract.optimization = ''
