@@ -185,6 +185,7 @@
       @hide="dialog.show=false;dialog.body=null;dialog.obj=null"
       @call="(e)=>$emit('call',e)"
       @send="(e)=>$emit('send',e)"
+      @estimateGas="(e)=>$emit('estimateGas',e)"
     ></component>
     </v-dialog>
   </div>
@@ -302,6 +303,7 @@ export default {
       this.dialog.fullName = obj.type + ' ' + this.dialog.name
       this.dialog.obj = obj
       this.dialog.body = ABIRun
+      this.dialog.returns = 'Estimate gas'
       this.dialog.show = !this.dialog.show
     },
     runCF: function (obj) {

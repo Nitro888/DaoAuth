@@ -13,13 +13,13 @@
           class="mono"
           :label="item.label"
           :rules="notEmpty"
+          @input="estimateGas"
           required
         ></v-text-field>
         <v-textarea
           readonly
           outline
-          v-if="dialog.obj.type=='function'&&dialog.obj.constant"
-          class="mono"
+          class="mono mt-2"
           :label="dialog.returns"
           :value="result"
         ></v-textarea>
@@ -55,21 +55,40 @@ export default {
     this.btn = this.dialog.obj.constant ? 'Call' : 'Send'
   },
   methods: {
+    estimateGas: function () {
+      if (this.$refs.form.validate()) {
+        this.result = ''
+        try {
+          let encodeABI = window.wallet.abiQR.encodeFunctionCall({ to: this.address, json: this.dialog.obj, parms: this.agrs })
+          let that = this
+          this.$emit('estimateGas', {
+            callData: { to: encodeABI.to, data: encodeABI.code },
+            callback: (e, r) => {
+              if (!e) {
+                that.result = 'estimateGas : ' + r
+              } else {
+                that.result = JSON.stringify(e)
+              }
+            }
+          })
+        } catch (error) {
+          console.log(JSON.stringify(error))
+        }
+      }
+    },
     run: function () {
       if (this.$refs.form.validate()) {
         let encodeABI = window.wallet.abiQR.encodeFunctionCall({ to: this.address, json: this.dialog.obj, parms: this.agrs })
         if (this.dialog.obj.constant) {
           let that = this
-          this.$emit('call',
-            {
-              callData: { to: encodeABI.to, data: encodeABI.code },
-              callback: (e, r) => {
-                if (!e) {
-                  that.result = JSON.stringify(window.wallet.web3.eth.abi.decodeParameters(that.dialog.obj.outputs, r), null, 2)
-                }
+          this.$emit('call', {
+            callData: { to: encodeABI.to, data: encodeABI.code },
+            callback: (e, r) => {
+              if (!e) {
+                that.result = JSON.stringify(window.wallet.web3.eth.abi.decodeParameters(that.dialog.obj.outputs, r), null, 2)
               }
             }
-          )
+          })
         } else {
           let that = this
           this.$emit('send', {
@@ -79,8 +98,7 @@ export default {
                 that.result = JSON.stringify(window.wallet.web3.eth.abi.decodeParameters(that.dialog.obj.outputs, r), null, 2)
               }
             }
-          }
-          )
+          })
         }
       }
     }

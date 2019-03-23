@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <div v-for="(item, index) in contents" v-bind:key="index">
-      <div class="headline white--text font-weight-light text-xs-center" v-html="item.title"/>
-      <div class="body-2 mb-5 text-xs-center font-weight-thin nanum-gothic" v-html="item.content"/>
+      <div class="headline mb-1 white--text font-weight-light text-xs-center" v-html="item.title"/>
+      <div class="body-2 mb-5 text-xs-center font-weight-thin noto" v-html="item.content"/>
     </div>
     <h1 class="white--text font-weight-light display-1 mt-5 text-xs-center">DaoAuth</h1>
     <v-divider class="mb-3 mt-3"/>
@@ -154,7 +154,7 @@
     <v-divider class="mb-5 mt-3"/>
     <h1 class="white--text font-weight-light display-1 text-xs-center">CODE</h1>
     <v-divider class="mb-3 mt-3"/>
-    <ABI ref="abi" @call="call" @send="send"/>
+    <ABI ref="abi" @call="call" @send="send" @estimateGas="estimateGas"/>
   </v-container>
 </template>
 
@@ -269,6 +269,9 @@ export default {
     createErc721: function () {
       this.deploy(this.$refs.erc721.compile())
     },
+    estimateGas: function (data) {
+      web3.eth.estimateGas(data.callData, data.callback) // eslint-disable-line
+    },
     call: function (data) {
       web3.eth.call(data.callData, data.callback) // eslint-disable-line
     },
@@ -287,7 +290,7 @@ export default {
     font-family: 'Roboto Mono', monospace;
     font-size: 0.9em;
   }
-  .nanum-gothic {
-    font-family: 'Nanum Gothic', sans-serif;
+  .noto {
+    font-family: 'Noto Sans KR', sans-serif;
   }
 </style>
