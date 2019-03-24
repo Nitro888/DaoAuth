@@ -65,14 +65,20 @@ export default {
             callData: { to: encodeABI.to, data: encodeABI.code },
             callback: (e, r) => {
               if (!e) {
-                that.result = 'estimateGas : ' + r
+                that.result = JSON.stringify(
+                  {
+                    byteCode: encodeABI.code,
+                    estimateGas: r
+                  },
+                  null,
+                  2)
               } else {
-                that.result = JSON.stringify(e)
+                that.result = JSON.stringify(e, null, 2)
               }
             }
           })
         } catch (error) {
-          this.result = JSON.stringify(error)
+          this.result = JSON.stringify(error, null, 2)
         }
       }
     },

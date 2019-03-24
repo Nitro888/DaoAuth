@@ -197,6 +197,7 @@ import ABIRun from '@/components/ABIRun'
 
 export default {
   data: () => ({
+    valid: null,
     address: '',
     cf: [],
     ncf: [],
