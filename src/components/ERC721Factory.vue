@@ -1,14 +1,14 @@
 <template>
   <v-card flat>
     <v-layout row wrap>
-      <v-flex xs6>
+      <v-flex md6>
         <v-radio-group v-model="token.select" :mandatory="false" @change="select">
           <v-radio label="ERC721 (default)" value="ERC721"></v-radio>
           <v-radio label="ERC721 (burnable)" value="ERC721Burnable"></v-radio>
           <v-radio label="ERC721 (mintable)" value="ERC721Mintable"></v-radio>
         </v-radio-group>
       </v-flex>
-      <v-flex xs6>
+      <v-flex md6>
         <v-text-field
           v-model="token.name"
           label="Token Name"

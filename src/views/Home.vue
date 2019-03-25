@@ -121,10 +121,10 @@
     <h1 class="white--text font-weight-light display-1 text-xs-center">FACTORY</h1>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
-      <v-flex lg4>
+      <v-flex md4>
         <div class="headline mb-3 font-weight-light">Token Factory</div>
       </v-flex>
-      <v-flex lg8>
+      <v-flex md8>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>

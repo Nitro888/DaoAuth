@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-flex xs4>
+      <v-flex md4>
         <div class="headline font-weight-light">Contract</div>
       </v-flex>
-      <v-flex xs8>
+      <v-flex md8>
         <v-form ref="formContract" v-model="valid" lazy-validation>
           <v-text-field
             v-model="address"
@@ -20,34 +20,34 @@
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
-      <v-flex xs4>
+      <v-flex md4>
         <div class="headline font-weight-light">Source</div>
       </v-flex>
-      <v-flex xs8>
+      <v-flex md8>
         <v-form>
           <v-layout row wrap>
-            <v-flex xs6>
+            <v-flex md6>
               <v-text-field
                 readonly
                 v-model="contract.name"
                 label="Contract Name"
               ></v-text-field>
             </v-flex>
-            <v-flex xs6>
+            <v-flex md6>
               <v-text-field
                 readonly
                 v-model="contract.optimization"
                 label="Optimization Enabled"
               ></v-text-field>
             </v-flex>
-            <v-flex xs6>
+            <v-flex md6>
               <v-text-field
                 readonly
                 v-model="contract.compiler"
                 label="Compiler Version"
               ></v-text-field>
             </v-flex>
-            <v-flex xs6>
+            <v-flex md6>
               <v-text-field
                 readonly
                 v-model="contract.runs"
@@ -83,10 +83,10 @@
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
-      <v-flex xs4>
-        <div class="headline font-weight-light">ABI</div>
+      <v-flex md4>
+        <div class="headline font-weight-light mb-3">ABI</div>
       </v-flex>
-      <v-flex xs8>
+      <v-flex md8>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
