@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-layout row wrap>
-      <v-flex md4>
+      <v-flex md4 xs12>
         <div class="headline font-weight-light">Contract</div>
       </v-flex>
-      <v-flex md8>
+      <v-flex md8 xs12>
         <v-form ref="formContract" v-model="valid" lazy-validation>
           <v-text-field
             v-model="address"
@@ -20,10 +20,10 @@
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
-      <v-flex md4>
+      <v-flex md4 xs12>
         <div class="headline font-weight-light">Source</div>
       </v-flex>
-      <v-flex md8>
+      <v-flex md8 xs12>
         <v-form>
           <v-layout row wrap>
             <v-flex md6>
@@ -83,10 +83,10 @@
     </v-layout>
     <v-divider class="mb-3 mt-3"/>
     <v-layout row wrap>
-      <v-flex md4>
+      <v-flex md4 xs12>
         <div class="headline font-weight-light mb-3">ABI</div>
       </v-flex>
-      <v-flex md8>
+      <v-flex md8 xs12>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
