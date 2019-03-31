@@ -2,7 +2,9 @@
   <div>
     <v-layout row wrap>
       <v-flex md4 xs12>
-        <div class="headline font-weight-light">Contract</div>
+        <div class="headline font-weight-light">
+          Contract
+        </div>
       </v-flex>
       <v-flex md8 xs12>
         <v-form ref="formContract" v-model="valid" lazy-validation>
@@ -11,114 +13,132 @@
             label="Contract Address"
             class="mono"
             :rules="[rules.isAddress]"
-          ></v-text-field>
+          />
           <v-layout justify-end>
-            <v-btn flat @click.stop="load()">Load</v-btn>
+            <v-btn flat @click.stop="load()">
+              Load
+            </v-btn>
           </v-layout>
         </v-form>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-3 mt-3"/>
+    <v-divider class="mb-3 mt-3" />
     <v-layout row wrap>
       <v-flex md4 xs12>
-        <div class="headline font-weight-light">Source</div>
+        <div class="headline font-weight-light">
+          Source
+        </div>
       </v-flex>
       <v-flex md8 xs12>
         <v-form>
           <v-layout row wrap>
             <v-flex md6>
               <v-text-field
-                readonly
                 v-model="contract.name"
+                readonly
                 label="Contract Name"
-              ></v-text-field>
+              />
             </v-flex>
             <v-flex md6>
               <v-text-field
-                readonly
                 v-model="contract.optimization"
+                readonly
                 label="Optimization Enabled"
-              ></v-text-field>
+              />
             </v-flex>
             <v-flex md6>
               <v-text-field
-                readonly
                 v-model="contract.compiler"
+                readonly
                 label="Compiler Version"
-              ></v-text-field>
+              />
             </v-flex>
             <v-flex md6>
               <v-text-field
-                readonly
                 v-model="contract.runs"
+                readonly
                 label="Runs (Optimizer)"
-              ></v-text-field>
+              />
             </v-flex>
           </v-layout>
         </v-form>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Source</div>
+              <div class="title font-weight-light">
+                Source
+              </div>
             </template>
             <v-container>
               <v-text-field
-                readonly
                 v-model="contract.swarm"
+                readonly
                 class="mono"
                 label="Swarm Source"
-              ></v-text-field>
+              />
               <v-textarea
                 readonly
                 outline
-                rows='25'
+                rows="25"
                 label="Contract Source Code"
                 class="mono-small"
                 :value="contract.code"
-              ></v-textarea>
+              />
             </v-container>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-3 mt-3"/>
+    <v-divider class="mb-3 mt-3" />
     <v-layout row wrap>
       <v-flex md4 xs12>
-        <div class="headline font-weight-light mb-3">ABI</div>
+        <div class="headline font-weight-light mb-3">
+          ABI
+        </div>
       </v-flex>
       <v-flex md8 xs12>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Json</div>
+              <div class="title font-weight-light">
+                Json
+              </div>
             </template>
             <v-container>
               <v-textarea
                 readonly
                 outline
-                rows='10'
+                rows="10"
                 label="Contract ABI"
                 class="mono-small"
                 :value="contract.abi"
-              ></v-textarea>
+              />
             </v-container>
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Function</div>
+              <div class="title font-weight-light">
+                Function
+              </div>
             </template>
             <v-container>
               <v-list two-line subheader>
                 <v-list-tile
                   v-for="(item, index) in ncf"
-                  v-bind:key="index"
+                  :key="index"
                   @click="runNCF(item.obj)"
                 >
                   <v-list-tile-content>
-                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
+                    <v-list-tile-title class="mono">
+                      {{ item.title }}
+                    </v-list-tile-title>
                     <v-list-tile-sub-title>
-                      <v-chip v-if="item.payable" label disabled color="red" text-color="white">Payable</v-chip>
-                      <span class="mono">{{ item.returns }}</span>
+                      <v-chip v-if="item.payable" label disabled color="red" text-color="white">
+                        Payable
+                      </v-chip>
+                      <span class="mono">
+                        {{ item.returns }}
+                      </span>
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
@@ -127,20 +147,28 @@
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Constant Function</div>
+              <div class="title font-weight-light">
+                Constant Function
+              </div>
             </template>
             <v-container>
               <v-list two-line subheader>
                 <v-list-tile
                   v-for="(item, index) in cf"
-                  v-bind:key="index"
+                  :key="index"
                   @click="runCF(item.obj)"
                 >
                   <v-list-tile-content>
-                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
+                    <v-list-tile-title class="mono">
+                      {{ item.title }}
+                    </v-list-tile-title>
                     <v-list-tile-sub-title>
-                      <v-chip v-if="item.payable" label disabled color="red" text-color="white">Payable</v-chip>
-                      <span class="mono">{{ item.returns }}</span>
+                      <v-chip v-if="item.payable" label disabled color="red" text-color="white">
+                        Payable
+                      </v-chip>
+                      <span class="mono">
+                        {{ item.returns }}
+                      </span>
                     </v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
@@ -149,7 +177,9 @@
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Event</div>
+              <div class="title font-weight-light">
+                Event
+              </div>
             </template>
             <v-container>
               <v-list two-line subheader>
@@ -162,13 +192,17 @@
                 -->
                 <v-list-tile
                   v-for="(item, index) in e"
-                  v-bind:key="index"
+                  :key="index"
                   :href="getUrl(item.obj)"
                   target="_blank"
                 >
                   <v-list-tile-content>
-                    <v-list-tile-title class="mono">{{ item.title }}</v-list-tile-title>
-                    <v-list-tile-sub-title class="mono">{{ item.returns }}</v-list-tile-sub-title>
+                    <v-list-tile-title class="mono">
+                      {{ item.title }}
+                    </v-list-tile-title>
+                    <v-list-tile-sub-title class="mono">
+                      {{ item.returns }}
+                    </v-list-tile-sub-title>
                   </v-list-tile-content>
                 </v-list-tile>
               </v-list>
@@ -177,17 +211,17 @@
         </v-expansion-panel>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-3 mt-3"/>
+    <v-divider class="mb-3 mt-3" />
     <v-dialog v-model="dialog.show" persistent max-width="640">
       <component
-      v-bind:is="dialog.body"
-      v-bind:address="address"
-      v-bind:dialog="dialog"
-      @hide="dialog.show=false;dialog.body=null;dialog.obj=null"
-      @call="(e)=>$emit('call',e)"
-      @send="(e)=>$emit('send',e)"
-      @estimateGas="(e)=>$emit('estimateGas',e)"
-    ></component>
+        :is="dialog.body"
+        :address="address"
+        :dialog="dialog"
+        @hide="dialog.show=false;dialog.body=null;dialog.obj=null"
+        @call="(e)=>$emit('call',e)"
+        @send="(e)=>$emit('send',e)"
+        @estimateGas="(e)=>$emit('estimateGas',e)"
+      />
     </v-dialog>
   </div>
 </template>

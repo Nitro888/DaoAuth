@@ -1,160 +1,194 @@
 <template>
   <v-container>
-    <div v-for="(item, index) in contents" v-bind:key="index">
-      <div class="headline mb-1 white--text font-weight-light text-xs-center" v-html="item.title"/>
-      <div class="body-2 mb-5 text-xs-center font-weight-thin noto" v-html="item.content"/>
+    <div v-for="(item, index) in contents" :key="index">
+      <div class="headline mb-1 white--text font-weight-light text-xs-center">
+        {{ item.title }}
+      </div>
+      <div class="body-2 mb-5 text-xs-center font-weight-thin noto" v-html="item.content" />
     </div>
-    <h1 class="white--text font-weight-light display-1 mt-5 text-xs-center">DaoAuth</h1>
-    <v-divider class="mb-3 mt-3"/>
+    <h1 class="white--text font-weight-light display-1 mt-5 text-xs-center">
+      DaoAuth
+    </h1>
+    <v-divider class="mb-3 mt-3" />
     <v-layout row wrap>
       <v-flex md4>
-        <div class="headline font-weight-light">Issuer Account</div>
-        <div class="body-2 mb-3 font-weight-thin">{{member.issuers}}/{{member.accounts}}</div>
+        <div class="headline font-weight-light">
+          Issuer Account
+        </div>
+        <div class="body-2 mb-3 font-weight-thin">
+          {{ member.issuers }}/{{ member.accounts }}
+        </div>
       </v-flex>
       <v-flex md8>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Create Issuer Account</div>
+              <div class="title font-weight-light">
+                Create Issuer Account
+              </div>
             </template>
             <v-container>
               <v-form ref="formCreate" v-model="valid" lazy-validation>
                 <v-text-field
-                  label="Master"
                   v-model="create.master"
+                  label="Master"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="Payment"
                   v-model="create.payment"
+                  label="Payment"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="Verify"
                   v-model="create.verify"
+                  label="Verify"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="UID"
                   v-model="create.uid"
+                  label="UID"
                   class="address-small"
                   :rules="[rules.min]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="Account"
                   v-model="create.account"
+                  label="Account"
                   class="address-small"
                   :loading="loading"
                   :disabled="!enable"
                   readonly
-                ></v-text-field>
-                <v-spacer/><v-spacer/><v-spacer/>
+                />
+                <v-spacer /><v-spacer /><v-spacer />
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="createIssuer" :disabled="!enable">Create</v-btn>
+                <v-btn flat :disabled="!enable" @click="createIssuer">
+                  Create
+                </v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Add Issuer Proxy Keys</div>
+              <div class="title font-weight-light">
+                Add Issuer Proxy Keys
+              </div>
             </template>
             <v-container>
               <v-form ref="formAdd" v-model="valid" lazy-validation>
                 <v-text-field
-                  label="Account"
                   v-model="add.account"
+                  label="Account"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="UID"
                   v-model="add.proxyKey"
+                  label="UID"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="addProxy" :disabled="!enable">Add</v-btn>
+                <v-btn flat :disabled="!enable" @click="addProxy">
+                  Add
+                </v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">Remove Issuer Proxy Keys</div>
+              <div class="title font-weight-light">
+                Remove Issuer Proxy Keys
+              </div>
             </template>
             <v-container>
               <v-form ref="formRemove" v-model="valid" lazy-validation>
                 <v-text-field
-                  label="Account"
                   v-model="remove.account"
+                  label="Account"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
                 <v-text-field
-                  label="UID"
                   v-model="remove.proxyKey"
+                  label="UID"
                   class="address-small"
                   :rules="[rules.isAddress]"
                   :disabled="!enable"
-                ></v-text-field>
+                />
               </v-form>
               <div class="text-xs-right">
-                <v-btn flat @click="removeProxy" :disabled="!enable">Remove</v-btn>
+                <v-btn flat :disabled="!enable" @click="removeProxy">
+                  Remove
+                </v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-5 mt-3"/>
-    <h1 class="white--text font-weight-light display-1 text-xs-center">FACTORY</h1>
-    <v-divider class="mb-3 mt-3"/>
+    <v-divider class="mb-5 mt-3" />
+    <h1 class="white--text font-weight-light display-1 text-xs-center">
+      FACTORY
+    </h1>
+    <v-divider class="mb-3 mt-3" />
     <v-layout row wrap>
-      <v-flex md4>
-        <div class="headline mb-3 font-weight-light">Token Factory</div>
+      <v-flex md4 xs12>
+        <div class="headline mb-3 font-weight-light">
+          Token Factory
+        </div>
       </v-flex>
-      <v-flex md8>
+      <v-flex md8 xs12>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">ERC 20</div>
+              <div class="title font-weight-light">
+                ERC 20
+              </div>
             </template>
             <v-container>
-              <ERC20 ref="erc20"/>
+              <ERC20 ref="erc20" />
               <div class="text-xs-right">
-                <v-btn flat @click="createErc20">Create</v-btn>
+                <v-btn flat @click="createErc20">
+                  Create
+                </v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
           <v-expansion-panel-content>
             <template v-slot:header>
-              <div class="title font-weight-light">ERC 721</div>
+              <div class="title font-weight-light">
+                ERC 721
+              </div>
             </template>
             <v-container>
-              <ERC721 ref="erc721"/>
+              <ERC721 ref="erc721" />
               <div class="text-xs-right">
-                <v-btn flat @click="createErc721">Create</v-btn>
+                <v-btn flat @click="createErc721">
+                  Create
+                </v-btn>
               </div>
             </v-container>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-5 mt-3"/>
-    <h1 class="white--text font-weight-light display-1 text-xs-center">CODE</h1>
-    <v-divider class="mb-3 mt-3"/>
-    <ABI ref="abi" @call="call" @send="send" @estimateGas="estimateGas"/>
+    <v-divider class="mb-5 mt-3" />
+    <h1 class="white--text font-weight-light display-1 text-xs-center">
+      CODE
+    </h1>
+    <v-divider class="mb-3 mt-3" />
+    <ABI ref="abi" @call="call" @send="send" @estimateGas="estimateGas" />
   </v-container>
 </template>
 
@@ -169,7 +203,12 @@ export default {
     ERC721,
     ABI
   },
-  props: ['contents'],
+  props: {
+    contents: {
+      type: Array,
+      required: true
+    }
+  },
   data: () => ({
     valid: null,
     loading: false,

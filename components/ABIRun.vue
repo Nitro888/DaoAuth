@@ -1,6 +1,10 @@
 <template>
   <v-card>
-    <v-card-title primary-title><span class="mono font-weight-medium">{{ title }}</span></v-card-title>
+    <v-card-title primary-title>
+      <span class="mono font-weight-medium">
+        {{ title }}
+      </span>
+    </v-card-title>
     <!--
     <v-card-text>{{ dialog.fullName }}</v-card-text>
     -->
@@ -8,34 +12,47 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
           v-for="(item, index) in agrs"
-          v-bind:key="index"
+          :key="index"
           v-model="item.model"
           class="mono"
           :label="item.label"
           :rules="notEmpty"
-          @input="estimateGas"
           required
-        ></v-text-field>
+          @input="estimateGas"
+        />
         <v-textarea
           readonly
           outline
           class="mono mt-2"
           :label="dialog.returns"
           :value="result"
-        ></v-textarea>
+        />
       </v-form>
     </v-container>
     <v-layout v-if="dialog.obj.type=='function'">
-      <v-spacer></v-spacer>
-      <v-btn flat @click.stop="$emit('hide')">Close</v-btn>
-      <v-btn flat @click.stop="run">{{ btn }}</v-btn>
+      <v-spacer />
+      <v-btn flat @click.stop="$emit('hide')">
+        Close
+      </v-btn>
+      <v-btn flat @click.stop="run">
+        {{ btn }}
+      </v-btn>
     </v-layout>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ['address', 'dialog'],
+  props: {
+    address: {
+      type: String,
+      required: true
+    },
+    dialog: {
+      type: Object,
+      required: true
+    }
+  }, // ['address', 'dialog'],
   data: () => ({
     valid: null,
     title: '',

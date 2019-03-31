@@ -3,9 +3,9 @@
     <v-layout row wrap>
       <v-flex md6>
         <v-radio-group v-model="token.select" :mandatory="false" @change="select">
-          <v-radio label="ERC20 (default)" value="ERC20"></v-radio>
-          <v-radio label="ERC20 (burnable)" value="ERC20Burnable"></v-radio>
-          <v-radio label="ERC20 (mintable)" value="ERC20Mintable"></v-radio>
+          <v-radio label="ERC20 (default)" value="ERC20" />
+          <v-radio label="ERC20 (burnable)" value="ERC20Burnable" />
+          <v-radio label="ERC20 (mintable)" value="ERC20Mintable" />
         </v-radio-group>
       </v-flex>
       <v-flex md6>
@@ -13,16 +13,16 @@
           v-model="token.name"
           label="Token Name"
           readonly
-        ></v-text-field>
+        />
         <v-text-field
           v-model="token.symbol"
           label="Token Symbol"
-        ></v-text-field>
+        />
         <v-text-field
           v-model="token.initialSupply"
           label="Token Initial Supply"
           type="number"
-        ></v-text-field>
+        />
       </v-flex>
     </v-layout>
   </v-card>

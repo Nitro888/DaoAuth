@@ -1,8 +1,10 @@
 <template>
   <v-app dark>
     <v-toolbar app flat>
-      <v-toolbar-title class="headline text-uppercase" v-html="title"/>
-      <v-spacer></v-spacer>
+      <v-toolbar-title class="headline text-uppercase">
+        {{ title }}
+      </v-toolbar-title>
+      <v-spacer />
       <v-btn
         flat
         icon
@@ -40,12 +42,12 @@
         class="flex site-footer"
         flat
       >
-        <v-card-actions class="justify-center" v-html="footer"/>
+        <v-card-actions class="justify-center" v-html="footer" />
       </v-card>
     </v-footer>
 
     <v-content>
-      <Index v-bind:contents="contents"/>
+      <Index :contents="contents" />
     </v-content>
   </v-app>
 </template>
