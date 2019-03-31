@@ -5,8 +5,8 @@ import '@/blockchain/ethereum'
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.blue.darken2,
-    accent: colors.grey.darken3,
+    primary: '#ffffff',
+    accent: '#ffffff',
     secondary: colors.amber.darken3,
     info: colors.teal.lighten1,
     warning: colors.amber.base,
