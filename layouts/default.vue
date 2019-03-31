@@ -45,20 +45,20 @@
     </v-footer>
 
     <v-content>
-      <Home v-bind:contents="contents"/>
+      <Index v-bind:contents="contents"/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Home from '@/pages/Home'
+import Index from '@/pages/index'
 import KO from '@/document/ko.js'
 import EN from '@/document/en.js'
 
 export default {
   name: 'App',
   components: {
-    Home
+    Index
   },
   data: () => ({
     title: 'DaoAuth',
