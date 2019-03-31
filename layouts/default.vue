@@ -63,8 +63,8 @@ export default {
   data: () => ({
     title: 'DaoAuth',
     items: { KO, EN },
-    contents: KO,
-    select: 'KO',
+    contents: EN,
+    select: 'EN',
     footer: '&copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>'
   }),
   methods: {

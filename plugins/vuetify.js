@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/es5/util/colors'
+import '@/blockchain/ethereum'
 
 Vue.use(Vuetify, {
   theme: {
