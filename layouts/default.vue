@@ -42,32 +42,37 @@
         class="flex site-footer"
         flat
       >
-        <v-card-actions class="justify-center" v-html="footer" />
+        <v-card-actions class="justify-center">
+          &copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>
+        </v-card-actions>
       </v-card>
     </v-footer>
 
     <v-content>
-      <Index :contents="contents" />
+      <v-container>
+        <div v-for="(item, index) in contents" :key="index">
+          <div class="headline mb-1 white--text font-weight-light text-xs-center">
+            {{ item.title }}
+          </div>
+          <div class="body-2 mb-5 text-xs-center font-weight-thin noto" v-html="item.content" />
+        </div>
+      </v-container>
+      <nuxt />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Index from '@/pages/index'
 import KO from '@/document/ko.js'
 import EN from '@/document/en.js'
 
 export default {
   name: 'App',
-  components: {
-    Index
-  },
   data: () => ({
     title: 'DaoAuth',
     items: { KO, EN },
     contents: EN,
-    select: 'EN',
-    footer: '&copy;2018<span class="ml-1 mr-1 font-weight-black">·</span><strong>daoauth.com</strong>'
+    select: 'EN'
   }),
   methods: {
     change: function (select) {

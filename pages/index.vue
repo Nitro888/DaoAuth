@@ -1,11 +1,5 @@
 <template>
   <v-container>
-    <div v-for="(item, index) in contents" :key="index">
-      <div class="headline mb-1 white--text font-weight-light text-xs-center">
-        {{ item.title }}
-      </div>
-      <div class="body-2 mb-5 text-xs-center font-weight-thin noto" v-html="item.content" />
-    </div>
     <h1 class="white--text font-weight-light display-1 mt-5 text-xs-center">
       DaoAuth
     </h1>
@@ -202,12 +196,6 @@ export default {
     ERC20,
     ERC721,
     ABI
-  },
-  props: {
-    contents: {
-      type: Array,
-      required: true
-    }
   },
   data: () => ({
     valid: null,
